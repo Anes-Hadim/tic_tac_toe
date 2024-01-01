@@ -19,7 +19,7 @@ async function start() {
   } else {
     document.getElementById('start').innerHTML='you go first'
     who=true;
-    await delay(1000);
+    await delay(2000);
     document.getElementById('start').innerHTML=''
   } 
 }
