@@ -39,6 +39,7 @@ p{
 a {
   text-decoration: none;
   color: black; 
+  width: 40px;
 }
 a:visited {
   color: black;
