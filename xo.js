@@ -14,18 +14,17 @@ async function start() {
   if (choose===0) {
     document.getElementById('start').innerHTML='you go second'
     await delay(1000);
-    document.getElementById('start').innerHTML=''
+    document.getElementById('start').innerHTML='<br>'
     computer()
   } else {
     document.getElementById('start').innerHTML='you go first'
     who=true;
     await delay(2000);
-    document.getElementById('start').innerHTML=''
+    document.getElementById('start').innerHTML='<br>'
   } 
 }
 
 function computer() {
-  result();
   let line=Math.floor(Math.random()*3);
   let colomn=Math.floor(Math.random()*3);
   if (grid[line][colomn]===0&&!result()) {
@@ -39,7 +38,6 @@ function computer() {
 }
 
 async function xo(line,colomn) {
-  result();
   if (grid[line][colomn]===0&&who&&!result()) {
     document.getElementById(`${line}${colomn}`).innerHTML=`<img class="game" src="x.png">`;
     grid[line][colomn]=2;

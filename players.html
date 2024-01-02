@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xo</title>
+  <link rel="stylesheet" href="xo.css">
+</head>
+<body>
+  <p>Welcome to xo game</p>
+  <p id="start"></p>
+  <div class="main">
+    <div class="box" id="00" style="border-top: none;border-left: none;" onclick="xo(0,0)"><button></button></div>
+    <div class="box" id="01" style="border-top: none;" onclick="xo(0,1)"><button></button></div>
+    <div class="box" id="02" style="border-top: none;border-right: none;" onclick="xo(0,2)"><button></button></div>
+    <div class="box" id="10" style="border-left: none;" onclick="xo(1,0)"><button></button></div>
+    <div class="box" id="11" onclick="xo(1,1)"><button></button></div>
+    <div class="box" id="12" style="border-right: none;" onclick="xo(1,2)"><button></button></div>
+    <div class="box" id="20" style="border-left: none;border-bottom: none;" onclick="xo(2,0)"><button></button></div>
+    <div class="box" id="21" style="border-bottom: none;" onclick="xo(2,1)"><button></button></div>
+    <div class="box" id="22" style="border-bottom: none;border-right: none;" onclick="xo(2,2)"><button></button></div>
+  </div>
+  <div id="sd"></div>
+  <script src="players.js"></script>
+</body>
+</html>
