@@ -28,10 +28,10 @@ function computer() {
   let line=Math.floor(Math.random()*3);
   let colomn=Math.floor(Math.random()*3);
   if (grid[line][colomn]===0&&!result()) {
-   document.getElementById(`${line}${colomn}`).innerHTML=`<img class="game" src="o.png">`;
-   grid[line][colomn]=1;
-   who=true;
-   result();
+    document.getElementById(`${line}${colomn}`).innerHTML=`<img class="game" src="o.png">`;
+    grid[line][colomn]=1;
+    who=true;
+    result();
   } else {
     computer()
   }
@@ -49,53 +49,42 @@ async function xo(line,colomn) {
 }
 
 function result() {
-  let p=document.getElementById('sd');
-  let l1=grid[0][0]===grid[0][1]&&grid[0][1]===grid[0][2];
-  let l2=grid[1][0]===grid[1][1]&&grid[1][1]===grid[1][2];
-  let l3=grid[2][0]===grid[2][1]&&grid[2][1]===grid[2][2];
-  let c1=grid[0][0]===grid[1][0]&&grid[1][0]===grid[2][0];
-  let c2=grid[0][1]===grid[1][1]&&grid[1][1]===grid[2][1];
-  let c3=grid[0][2]===grid[1][2]&&grid[1][2]===grid[2][2];
-  let d1=grid[0][0]===grid[1][1]&&grid[1][1]===grid[2][2];
-  let d2=grid[2][0]===grid[1][1]&&grid[1][1]===grid[0][2];
-  if (l1&&grid[0][0]!==0){
-    grid[0][0]===1 ? p.innerHTML=`<p id="score">you lost</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>` : p.innerHTML=`<p id="score">you won</p>
+  let p = document.getElementById('sd');
+  const showResult = (message) => {
+    p.innerHTML = `<p id="score">${message}</p>
     <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>`;
-    return true;
-  } else if (l2&&grid[1][0]!==0) {
-    grid[1][0]===1 ? p.innerHTML=`<p id="score">you lost</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>` : p.innerHTML=`<p id="score">you won</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>`;
-    return true;
-  }else if (l3&&grid[2][0]!==0) {
-    grid[2][0]===1 ? p.innerHTML=`<p id="score">you lost</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>` : p.innerHTML=`<p id="score">you won</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>`;
-    return true;
-  } else if (c1&&grid[0][0]!==0) {
-    grid[0][0]===1 ? p.innerHTML=`<p id="score">you lost</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>` : p.innerHTML=`<p id="score">you won</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>`;
-    return true;
-  } else if (c2&&grid[0][1]!==0) {
-    grid[0][1]===1 ? p.innerHTML=`<p id="score">you lost</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>` : p.innerHTML=`<p id="score">you won</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>`;
-    return true;
-  } else if (c3&&grid[0][2]!==0) {
-    grid[0][2]===1 ? p.innerHTML=`<p id="score">you lost</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>` : p.innerHTML=`<p id="score">you won</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>`;
-    return true;
-  }else if ((d1&&grid[1][1]!==0)||(d2&&grid[1][1]!==0)) {
-    grid[1][1]===1 ? p.innerHTML=`<p id="score">you lost</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>` : p.innerHTML=`<p id="score">you won</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>`;
-    return true;
-  } else if (grid.every(row => row.every(cell => cell !== 0))) {
-    p.innerHTML = `<p id="score">It's a tie!</p>
-    <button id="retry"><a href="xo.html"><img id="arrow" src="refresh.png"></a></button>`;
-    return true;
-   } else return false;
+  };
+
+  const checkLine = (a, b, c) => grid[a[0]][a[1]] === grid[b[0]][b[1]] && grid[b[0]][b[1]] === grid[c[0]][c[1]] && grid[a[0]][a[1]] !== 0;
+
+  const lines = [
+    [[0, 0], [0, 1], [0, 2]], // row 1
+    [[1, 0], [1, 1], [1, 2]], // row 2
+    [[2, 0], [2, 1], [2, 2]], // row 3
+    [[0, 0], [1, 0], [2, 0]], // column 1
+    [[0, 1], [1, 1], [2, 1]], // column 2
+    [[0, 2], [1, 2], [2, 2]], // column 3
+    [[0, 0], [1, 1], [2, 2]], // diagonal 1
+    [[2, 0], [1, 1], [0, 2]]  // diagonal 2
+  ];
+
+  for (const line of lines) {
+    if (checkLine(...line)) {
+      if(grid[line[0][0]][line[0][1]] === 1) {
+        showResult('you lost');
+        return 'computer';
+      }else {
+        showResult('you won');
+        return 'human';
+      }
+    }
+  }
+
+  if (grid.every(row => row.every(cell => cell !== 0))) {
+    showResult("It's a tie!");
+    return 'tie';
+  }
+
+  return '';
 }
+
